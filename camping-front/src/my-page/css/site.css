@@ -1,0 +1,8 @@
+.site-container{
+     flex: 0 0 auto; /* 자식 요소들이 컨테이너에 맞춰 크기를 자동으로 조절하지 않도록 설정 */
+    margin: 16px;
+    width: 400px; /* 각 Site 컴포넌트의 가로 크기 */
+    margin-right: 10px; /* Site 컴포넌트 사이의 간격 설정 */
+    border: 1px solid red;
+    height: 400px;
+}

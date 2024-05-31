@@ -1,0 +1,111 @@
+.myCampingRegisterContainer {
+    flex-direction: column;
+    width: 800px;
+    border: 1px solid black;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.input {
+    width: 220px;
+}
+
+
+.inputContainer {
+    width: 350px;
+    margin: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.textarea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 350px;
+    margin: 16px;
+}
+
+.textareaContainer {
+    width: 220px; /* 텍스트 영역 너비 */
+    height: 150px; /* 텍스트 영역 높이 */
+    font-size: 16px;
+    resize: none; /* 사용자가 크기를 조정할 수 없도록 함 */
+}
+
+.timeSelect {
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
+}
+
+.checkin-out-time {
+    width: 400px;
+    margin: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.timeMargin {
+    margin-right: 16px; /* 원하는 마진 값으로 조정 */
+}
+.openModalButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-height: 80%; /* 최대 높이를 설정하여 스크롤이 가능하도록 함 */
+    overflow-y: auto; /* 내용이 넘칠 경우 수직 스크롤바를 표시 */
+    width: 400px; /* 모달 너비 설정 */
+}
+.selectMenu {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.image-container{
+    width: 390px;
+    height: 300px;
+    border: solid 1px black;
+    margin-bottom: 32px;
+}
+.modalOverlay-btn{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sites{
+    border: 1px solid black;
+    display: flex;
+    overflow-x: auto; /* 수평 스크롤을 가능하게 함 */
+    width: 100%; /* 부모 요소에 꽉 차도록 너비 설정 */
+}
+.facilities>label {
+margin: 6px;
+}
+
+
+  
