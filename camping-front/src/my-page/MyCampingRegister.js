@@ -2,9 +2,12 @@ import Site from "./component/Site";
 import "./css/my_camping_register.css";
 import React, { useState } from "react";
 import axios from "axios";
+import Modal from "./component/Modal";
 
 export default function MyCampingRegister() {
+  const [selectIndex, setSelectIndex] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [siteList, setSiteList] = useState([]);
   const [facilities, setFacilities] = useState({
     publicShowerroom: false,
@@ -33,6 +36,20 @@ export default function MyCampingRegister() {
   const addSite = (site) => {
     setSiteList((prevSites) => [...prevSites, site]);
     closeModal(); // Close the modal
+  };
+
+  const editSite = (newSite) => {
+    console.log(newSite);
+    setSiteList((prevSites) => {
+      const updatedSites = prevSites.map((site, index) => {
+        if (index === selectIndex) {
+          return newSite;
+        }
+        return site;
+      });
+      return updatedSites;
+    });
+    setIsEditModalOpen(false);
   };
 
   const handleFacilityChange = (e) => {
@@ -82,10 +99,33 @@ export default function MyCampingRegister() {
       <button onClick={openModal} className="openModalButton">
         사이트 등록
       </button>
-      {isModalOpen && <Modal closeModal={closeModal} addSite={addSite} />}
+      {isModalOpen && (
+        <Modal closeModal={closeModal} addSite={addSite} siteData={null} />
+      )}
+      {isEditModalOpen && (
+        <Modal
+          closeModal={() => setIsEditModalOpen(false)}
+          addSite={editSite}
+          siteData={siteList[selectIndex]} // 해당 인덱스의 사이트 데이터 전달
+        ></Modal>
+      )}
       <div className="sites">
-        {siteList.map((item) => (
-          <Site key={item.id}></Site>
+        {siteList.map((item, index) => (
+          <Site
+            key={index}
+            siteData={item}
+            onDelete={() => {
+              setSiteList((prev) => {
+                const newList = [...prev];
+                newList.splice(index, 1); // 해당 인덱스의 항목 삭제
+                return newList;
+              });
+            }}
+            onEdit={() => {
+              setSelectIndex(index); // 인덱스 저장
+              setIsEditModalOpen(true); // 모달을 열기 위해 상태 변경
+            }}
+          ></Site>
         ))}
       </div>
       <div className="checkin-out-time">
@@ -245,74 +285,5 @@ function TimeSelect({ onChange, value }) {
         </option>
       ))}
     </select>
-  );
-}
-function Modal({ closeModal, addSite }) {
-  const [selectedOption, setSelectedOption] = useState("");
-  const [peopleCount, setPeopleCount] = useState("");
-  const [price, setPrice] = useState("");
-  const [name, setName] = useState("");
-  const handleSelectChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-
-  const handlePeopleCountChange = (e) => {
-    setPeopleCount(e.target.value);
-  };
-
-  const handlePriceChange = (e) => {
-    setPrice(e.target.value);
-  };
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleSubmit = () => {
-    const newSite = {
-      sitePhotoUrl: "testurl",
-      siteName: name,
-      category: selectedOption || "캠핑",
-      pCapacity: parseInt(peopleCount),
-      charge: parseInt(price),
-    };
-    addSite(newSite);
-  };
-
-  return (
-    <div className="modalOverlay">
-      <div className="modalContent">
-        <div className="image-container"></div>
-        <div className="inputContainer">
-          사이트 이름{" "}
-          <input className="input" value={name} onChange={handleNameChange} />
-        </div>
-        <select
-          value={selectedOption}
-          onChange={handleSelectChange}
-          className="selectMenu"
-        >
-          <option value="캠핑">캠핑</option>
-          <option value="글램핑">글램핑</option>
-          <option value="카라반">카라반</option>
-          <option value="펜션">펜션</option>
-        </select>
-        <div className="inputContainer">
-          인원수{" "}
-          <input
-            className="input"
-            value={peopleCount}
-            onChange={handlePeopleCountChange}
-          />
-        </div>
-        <div className="inputContainer">
-          요금{" "}
-          <input className="input" value={price} onChange={handlePriceChange} />
-        </div>
-        <div className="modalOverlay-btn">
-          <button onClick={closeModal}>닫기</button>
-          <button onClick={handleSubmit}>확인</button>
-        </div>
-      </div>
-    </div>
   );
 }
